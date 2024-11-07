@@ -27,5 +27,7 @@ create table customer(
     foreign key(oID) references orders(oID),
     foreign key(pID) references product(pID)
     );
+    alter table order_detail
+    add odQTY int;
     
    
