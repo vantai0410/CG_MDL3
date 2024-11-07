@@ -3,7 +3,7 @@ use quanlysinhvien;
  -- Hiển thị tất cả các sinh viên có tên bắt đầu bảng ký tự ‘h’
  select *
  from student
- where StudentName like "H%"
+ where StudentName like "H%";
  
  -- Hiển thị các thông tin lớp học có thời gian bắt đầu vào tháng 12.
  select *
@@ -30,4 +30,3 @@ use quanlysinhvien;
  inner join mark m on s.StudentId = m.StudentId
  inner join subject sj on sj.SubId = m.SubId
  order by m.Mark desc, s.StudentName asc;
- 
