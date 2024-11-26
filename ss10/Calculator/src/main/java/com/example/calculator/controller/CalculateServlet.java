@@ -1,5 +1,7 @@
 package com.example.calculator.controller;
 
+import com.example.calculator.model.Calculate;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -14,36 +16,37 @@ public class CalculateServlet extends HttpServlet {
         float first=Float.parseFloat(req.getParameter("first"));
         float second=Float.parseFloat(req.getParameter("second"));
         String operator=req.getParameter("operator");
-        try{
-            float result;
-            switch (operator) {
-                case "add":
-                    result = first + second;
-                    break;
-                case "subtract":
-                    result = first - second;
-                    break;
-                case "multiply":
-                    result = first * second;
-                    break;
-                case "divide":
-                    if (second == 0) {
-                        throw new ArithmeticException("Cannot divide by zero.");
-                    }
-                    result = first / second;
-                    break;
-                default:
-                    throw new IllegalArgumentException("Invalid operator.");
-            }
-            req.setAttribute("result", result);
-            req.setAttribute("first", first);
-            req.setAttribute("second", second);
-            req.setAttribute("operator", operator);
-            } catch (ArithmeticException e) {
-            req.setAttribute("error", e.getMessage());
-        } catch (Exception e) {
-            req.setAttribute("error", "Invalid input or operator. Please try again.");
+        char operatorChar;
+
+        switch (operator) {
+            case "add":
+                operatorChar = '+';
+                break;
+            case "subtract":
+                operatorChar = '-';
+                break;
+            case "multiply":
+                operatorChar = '*';
+                break;
+            case "divide":
+                operatorChar = '/';
+                break;
+            default:
+                req.setAttribute("error", "Invalid operator.");
+                req.getRequestDispatcher("/result.jsp").forward(req, resp);
+                return;
         }
+
+        try {
+            float result = Calculate.calculate(first, second, operatorChar);
+            req.setAttribute("result", result);
+        } catch (RuntimeException e) {
+            req.setAttribute("error", e.getMessage());
+        }
+
+        req.setAttribute("first", first);
+        req.setAttribute("second", second);
+        req.setAttribute("operator", operator);
         req.getRequestDispatcher("/result.jsp").forward(req, resp);
     }
 
