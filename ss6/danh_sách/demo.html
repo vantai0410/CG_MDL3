@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+<!--list-style-type (nếu một danh sách đánh dâu bằng hình ảnh được chỉ định, giá trị của thuộc tính này sẽ được hiển thị nếu hình ảnh vì một số lý do nào đó không thể hiển thị)
+list-style-position (xác định cho vị trí đánh dấu mục danh sách xuất hiện bên trong hoặc bên ngoài dòng nội dung)
+list-style-image (chỉ định một hình ảnh như để đánh dấu các mục của danh sách)-->
+    <style>
+        ul.a{
+            list-style-type: circle;
+        }
+        ol.b{
+            list-style-type: upper-roman;
+        }
+        ol{
+            background: #ff5733;
+            padding: 20px;
+        }
+        ul{
+            background: cornflowerblue;
+            padding: 20px;
+        }
+        ul li{
+            background: #cce5ff;
+            margin: 5px;
+        }
+        ol li {
+            background: #ffe5e5;
+            padding: 5px;
+            margin-left: 35px;
+        }
+    </style>
+</head>
+<body>
+<p>vidu ve danh sách khong co thu tu</p>
+<ul class="a">
+    <li>cf</li>
+    <li>tea</li>
+</ul>
+
+<p>vdu ve danh sach theo thu tu</p>
+<ol class="b">
+    <li>cf</li>
+    <li>tea</li>
+</ol>
+</body>
+</html>

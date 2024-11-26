@@ -22,10 +22,10 @@
   </tr>
   <c:forEach items="${customers}" var="c" >
     <tr>
-      <th>${c.name}</th>
-      <th>${c.dob}</th>
-      <th>${c.address}</th>
-      <th><img src="${c.image}" width="100px" height="100px"></th>
+      <td>${c.name}</td>
+      <td>${c.dob}</td>
+      <td>${c.address}</td>
+      <td><img src="${c.image}" width="100px" height="100px"></td>
     </tr>
   </c:forEach>
 </table>
