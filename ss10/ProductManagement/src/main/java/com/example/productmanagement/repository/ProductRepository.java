@@ -50,4 +50,14 @@ public class ProductRepository implements IProductRepository {
         }
 
     }
+
+    @Override
+    public Product findByName(String name) {
+        return null;
+    }
+
+    @Override
+    public void searchProduct(String name, Product product) {
+
+    }
 }

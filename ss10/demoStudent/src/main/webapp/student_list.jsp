@@ -13,6 +13,7 @@
   </head>
   <body>
   <h1>Danh sách sinh viên</h1>
+  <a href="/student"></a>
   <a href="/student?action=show-create-form">Them moi sinh vien</a>
   <table>
     <tr>
