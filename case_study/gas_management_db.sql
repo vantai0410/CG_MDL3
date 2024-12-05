@@ -16,7 +16,7 @@ create table Customer (
  Weight float check (Weight > 0),
  GasType varchar(10) not null,
  StockQuantity int default 0
- )
+ );
  
 create table `Order` (
   OrderID varchar(5) PRIMARY KEY,
@@ -26,7 +26,15 @@ create table `Order` (
   Status NVARCHAR(20),
   FOREIGN KEY (CustomerID) REFERENCES Customer(CustomerID)
 );
-
+create table OrderDetail (
+	OrderDetailID varchar(5) PRIMARY KEY ,
+    OrderID varchar(5),
+    GasID varchar(5),
+    Quantity INT NOT NULL CHECK (Quantity > 0),
+    Price float NOT NULL,
+    FOREIGN KEY (OrderID) REFERENCES `Order`(OrderID),
+    FOREIGN KEY (GasID) REFERENCES Product(GasID)
+	);
 
 CREATE TABLE Staff (
     StaffID VARCHAR(5) PRIMARY KEY,
@@ -34,7 +42,7 @@ CREATE TABLE Staff (
     Role NVARCHAR(50) NOT NULL,
     Email NVARCHAR(100) NOT NULL,
     Password VARCHAR(100) NOT NULL
-)
+);
 
 
 
@@ -55,9 +63,16 @@ VALUES
 ('O001', (SELECT CustomerID FROM Customer WHERE Phone = '0905123456'), '2024-12-03 14:00:00', 150.75, 'Pending'),
 ('O002', (SELECT CustomerID FROM Customer WHERE Phone = '0987654321'), '2024-12-03 15:00:00', 200.50, 'Completed'),
 ('O003', (SELECT CustomerID FROM Customer WHERE Phone = '1122334455'), '2024-12-03 16:00:00', 180.00, 'Pending');
-
+INSERT INTO OrderDetail (OrderDetailID, OrderID, GasID, Quantity, Price)
+VALUES 
+('OD001', 'O001', 'G001', 2, 460000),
+('OD002', 'O001', 'G003', 1, 420000),
+('OD003', 'O002', 'G002', 1, 1500000),
+('OD004', 'O003', 'G001', 1, 460000),
+('OD005', 'O003', 'G003', 2, 420000);
 INSERT INTO Staff (StaffID, NameStaff, Role, Email, Password)
 VALUES 
+('S001', 'Pham Thi Lan', 'Admin', 'lan.pham@example.com', 'adminpass123'),
 ('S001', 'Pham Thi Lan', 'Admin', 'lan.pham@example.com', 'adminpass123'),
 ('S002', 'Nguyen Bao Chau', 'Delivery Staff', 'chau@example.com', 'delivery123'),
 ('S003', 'Tran Thi Binh', 'Order Processing Staff', 'binh.tran@example.com', 'orderpass456'),

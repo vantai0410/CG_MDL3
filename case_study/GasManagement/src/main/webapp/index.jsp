@@ -205,7 +205,7 @@
               <div class="card">
                 <img src="https://ecom.viettechsmart.com:5020/Media/Images/0/Frame_Window_Bep02-01.jpg" class="card-img-top">
                 <div class="card-body">
-                  <h5 class="card-title">Bếp khè Windo 168TW</h5>
+                  <h5 class="card-title">Bếp khò Windo 168TW</h5>
                   <p class="card-text"><b>685.000 ₫</b></p>
                 </div>
               </div>
@@ -225,8 +225,7 @@
   </button>
 </div>
 
-<h1><%= "Hello World!" %></h1>
 <br/>
-<a href="/customer">Hello Servlet</a>
+<a href="/order">Hello Servlet</a>
 </body>
 </html>

@@ -8,7 +8,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class CustomerService implements ICustomerService {
-    ICustomerRepository customerRepository = new CustomerRepository();
+    private final ICustomerRepository customerRepository = new CustomerRepository();
     @Override
     public List<Customer> getAll() {
         return customerRepository.getAll();
