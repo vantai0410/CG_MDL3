@@ -53,17 +53,27 @@ public class OrderServlet extends HttpServlet {
 
     private void deleteOrder(HttpServletRequest req, HttpServletResponse resp) {
         String orderID = req.getParameter("orderID");
-        if (orderID != null && !orderID.trim().isEmpty()){
+        if (orderID != null && !orderID.trim().isEmpty()) {
             orderService.deleteOrder(orderID);
         }
         try {
-            resp.sendRedirect("/order/order_list.jsp");
+            resp.sendRedirect("/order");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
     private void showEditForm(HttpServletRequest req, HttpServletResponse resp) {
+        String orderID = req.getParameter("orderID");
+        Order order = orderService.getOrderById(orderID);
+        req.setAttribute("order", order);
+        try {
+            req.getRequestDispatcher("/order/edit_list.jsp").forward(req,resp);
+        } catch (ServletException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private void showCreateForm(HttpServletRequest req, HttpServletResponse resp) {
@@ -97,6 +107,15 @@ public class OrderServlet extends HttpServlet {
     }
 
     private void updateOrder(HttpServletRequest req, HttpServletResponse resp) {
+        String orderID = req.getParameter("orderID");
+        String status = req.getParameter("status");
+        Order order = new Order(orderID, status);
+        orderService.updateOrder(orderID,status);
+        try {
+            resp.sendRedirect("/order?customerId=" + req.getParameter("customerID"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 
     }
 
