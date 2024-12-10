@@ -11,29 +11,91 @@
   <title>Danh Sách Đơn Hàng</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
-
   <style>
+    /* Ẩn modal mặc định */
+    .confirm-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      background: rgba(0, 0, 0, 0.7); /* Màu nền mờ */
+    }
+
+    /* Hiển thị modal khi checkbox được chọn */
+    .confirm-checkbox:checked + .confirm-modal {
+      display: flex;
+    }
+
+    /* Nội dung modal */
+    .modal-content {
+      background: #fff;
+      border-radius: 8px;
+      padding: 20px;
+      width: 300px;
+      text-align: center;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Nút hủy */
+    .btn-secondary {
+      background-color: #bdc3c7;
+      color: #2c3e50;
+      border: none;
+    }
+
+    .btn-secondary:hover {
+      background-color: #95a5a6;
+    }
+
+    /* Nút xác nhận */
+    .btn-danger {
+      background-color: #e74c3c;
+      color: white;
+      border: none;
+    }
+
+    .btn-danger:hover {
+      background-color: #c0392b;
+    }
+
+
+
     body {
       background-color: #f4f6f9;
       font-family: 'Arial', sans-serif;
     }
 
+
     .navbar {
-      background-color: #ff4d4d;
+      background-color: #ff4d4d; /* Màu nền đỏ */
+      border-bottom: 2px solid #e74c3c; /* Viền dưới để nổi bật */
     }
 
     .navbar-brand {
       font-weight: bold;
       color: white;
+      font-size: 1.3rem; /* Kích thước chữ */
     }
 
     .navbar-nav .nav-link {
       color: white !important;
       font-weight: bold;
+      font-size: 1rem; /* Đồng nhất kích thước chữ */
     }
 
-    .container {
-      margin-top: 50px;
+    .navbar-nav .nav-link:hover {
+      color: #e74c3c !important; /* Hiệu ứng hover */
+    }
+
+    .navbar-toggler-icon {
+      background-color: white; /* Đổi màu icon toggle */
+      border-radius: 50%; /* Icon toggle tròn */
+    }margin-top: 50px;
     }
 
     .step {
@@ -98,56 +160,110 @@
       margin-right: 50px;
     }
 
+    .search-form {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+    }
+
     .search-form input {
       width: 200px;
+      border: 2px solid #e74c3c; /* Viền đỏ */
+      border-radius: 5px; /* Bo góc */
+      padding: 5px;
     }
 
     .search-form button {
       background-color: #ff4d4d;
       color: white;
       border: none;
+      border-radius: 5px;
+      padding: 5px 10px;
+      margin-left: 5px;
     }
 
     .search-form button:hover {
-      background-color: black;
+      background-color: #e74c3c;
+      color: black;
     }
   </style>
 </head>
 <body>
-
 <nav class="navbar navbar-expand-lg navbar-light">
   <div class="container-fluid">
-    <a class="navbar-brand" href="Gas.html"><i class='bx bx-home-alt-2'></i> Gas</a>
+    <a class="navbar-brand" href="index.jsp"><i class='bx bx-home-alt-2'></i> Gas</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item"><a class="nav-link active" href="Goi_Gas.html">Gọi gas</a></li>
-        <li class="nav-item"><a class="nav-link" href="#">Sửa chữa và bảo hành</a></li>
+        <li class="nav-item"><a class="nav-link active" href="/order/order_list.jsp">Đơn hàng</a></li>
+        <li class="nav-item"><a class="nav-link" href="/order/create_list.jsp">Thêm đơn</a></li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Bếp & loại khác
+            Sản phẩm
           </a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="Bep_gas.html">Bếp gas</a></li>
-            <li><a class="dropdown-item" href="#">Bếp điện</a></li>
+            <li><a class="dropdown-item" href="">Gas</a></li>
+            <li><a class="dropdown-item" href="#">Bếp gas</a></li>
             <li><a class="dropdown-item" href="#">Máy hút mùi</a></li>
           </ul>
         </li>
         <li class="nav-item"><a class="nav-link disabled">Feedback</a></li>
       </ul>
-      <form class="d-flex" role="search">
-        <input class="form-control me-2" type="search" placeholder="Tìm kiếm" aria-label="Search">
-        <button class="btn btn-outline-dark" type="submit">Tìm kiếm</button>
+      <form action="/order" method="GET" class="search-form">
+        <input
+                class="form-control me-2"
+                type="text"
+                name="orderID"
+                placeholder="Mã Đơn Hàng"
+                value="${param.orderID}">
+
+        <input
+                class="form-control me-2"
+                type="text"
+                name="customerID"
+                placeholder="Mã Khách Hàng"
+                value="${param.customerID}">
+        <input type="hidden" name="action" value="search">
+        <button class="btn btn-primary" type="submit">Tìm kiếm</button>
       </form>
+
+
     </div>
   </div>
 </nav>
 
 <div class="container mt-5">
-  <h2 class="header">Danh Sách Đơn Hàng</h2>
+  <div class="row">
+    <div class="col-md-3 step">
+      <img src="https://www.gas24h.com.vn/themes/gas/ecommerce/images/icon-1.png" >
+      <p><strong>Bước 1:</strong></p>
+      <p>Đặt hàng trên website</p>
+    </div>
+    <div class="col-md-3 step">
+      <img src="https://www.gas24h.com.vn/themes/gas/ecommerce/images/icon-2.png" >
+      <p><strong>Bước 2:</strong></p>
+      <p>Nhân viên liên hệ xác nhận</p>
+    </div>
+    <div class="col-md-3 step">
+      <img src="https://www.gas24h.com.vn/themes/gas/ecommerce/images/icon-3.png" >
+      <p><strong>Bước 3:</strong></p>
+      <p>Giao Gas: 15 phút<br>Sản phẩm khác: 24 giờ</p>
+    </div>
+    <div class="col-md-3 step">
+      <img src="https://www.gas24h.com.vn/themes/gas/ecommerce/images/icon-4.png" >
+      <p><strong>Bước 4:</strong></p>
+      <p>Hoàn thành đơn hàng</p>
+    </div>
+  </div>
+</div>
+<div class="container mt-5">
   <a href="/order?action=create" class="btn btn-custom mb-3">Tạo mới đơn hàng</a>
+
+
+
+  <h2 class="header">Danh Sách Đơn Hàng</h2>
   <table class="table table-striped">
     <thead>
     <tr>
@@ -155,34 +271,48 @@
       <th>ID khách hàng</th>
       <th>Ngày Đặt</th>
       <th>Trạng Thái</th>
-      <th>Sản Phẩm</th>
-      <th>Số Lượng</th>
-      <th>Giá</th>
       <th>Hành Động</th>
     </tr>
     </thead>
     <tbody>
-    <c:forEach items="${orders}" var="o">
-      <tr>
-        <td>${o.orderID}</td>
-        <td>${o.customerID}</td>
-        <td>${o.orderDate}</td>
-        <td>${o.status}</td>
-        <td>${o.productName}</td>
-        <td>${o.quantity}</td>
-        <td>${o.price}</td>
-        <td>
-          <a href="/order?action=edit&orderID=${o.orderID}" class="btn btn-outline-warning btn-sm"><i class='bx bx-edit'></i></a>
-          <a href="/order?action=delete&orderID=${o.orderID}" class="btn btn-outline-danger btn-sm"><i class='bx bx-trash'></i></a>
-        </td>
-      </tr>
-    </c:forEach>
+  <c:forEach items="${orders}" var="o">
+    <tr>
+      <td>${o.orderID}</td>
+      <td>${o.customerID}</td>
+      <td>${o.orderDate}</td>
+      <td>${o.status}</td>
+      <td>
+        <a href="/order?action=edit&orderID=${o.orderID}" class="btn btn-outline-warning btn-sm">
+          <i class='bx bx-edit'></i> Sửa
+        </a>
+
+        <a href="#" class="btn btn-outline-danger btn-sm" onclick="document.getElementById('modal-${o.orderID}').style.display='flex';">
+          <i class='bx bx-trash'></i> Xóa
+        </a>
+        <div id="modal-${o.orderID}" class="confirm-modal" style="display: none;">
+          <div class="modal-content">
+            <p>Bạn có chắc chắn muốn xóa?</p>
+            <a href="/order?action=delete&orderID=${o.orderID}" class="btn btn-danger">Xác nhận</a>
+            <button class="btn btn-secondary" onclick="document.getElementById('modal-${o.orderID}').style.display='none';">Hủy</button>
+          </div>
+        </div>
+
+      </td>
+    </tr>
+  </c:forEach>
+  <c:if test="${not empty error}">
+    <div class="alert alert-danger" role="alert">
+        ${error}
+    </div>
+  </c:if>
+
     </tbody>
+
   </table>
 </div>
 
 <div class="footer">
-  <p>&copy; 2024 GasManagement. All Rights Reserved. <a href="privacy.html">Privacy Policy</a></p>
+  <p>&copy; 2024 GasManagement. All Rights Reserved.</p>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>

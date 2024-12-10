@@ -44,7 +44,7 @@ public class OrderDetailView {
     public void setOrderDate(LocalDateTime orderDate) {
         this.orderDate = orderDate;
     }
-    
+
 
     public String getStatus() {
         return status;

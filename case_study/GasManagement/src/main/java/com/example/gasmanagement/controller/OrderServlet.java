@@ -1,6 +1,7 @@
 package com.example.gasmanagement.controller;
 
 import com.example.gasmanagement.model.Order;
+import com.example.gasmanagement.model.OrderDetail;
 import com.example.gasmanagement.service.order.IOrderService;
 import com.example.gasmanagement.service.order.OrderService;
 
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @WebServlet(name = "OrderServlet", value = "/order")
 public class OrderServlet extends HttpServlet {
@@ -19,6 +21,7 @@ public class OrderServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.setCharacterEncoding("UTF-8");
         String action = req.getParameter("action");
         if (action == null) {
             action = "";
@@ -34,16 +37,38 @@ public class OrderServlet extends HttpServlet {
             case "delete":
                 deleteOrder(req, resp);
                 break;
+            case "search":
+                searchOrders(req, resp);
+                break;
             default:
                 listOrders(req, resp);
                 break;
         }
     }
 
-    private void listOrders(HttpServletRequest req, HttpServletResponse resp) {
-        req.setAttribute("orders", orderService.getAllOrders());
+    private void searchOrders(HttpServletRequest req, HttpServletResponse resp) {
+        String orderID = req.getParameter("orderID");
+        String customerID = req.getParameter("customerID");
+
+        // Gọi phương thức search từ service
+        List<Order> orders = orderService.searchOrders(orderID, customerID);
+
+        // Đưa kết quả vào attribute để hiển thị trên JSP
+        req.setAttribute("orders", orders);
+        req.setAttribute("orderID", orderID);
+        req.setAttribute("customerID", customerID);
+
         try {
-            req.getRequestDispatcher("/order/order_list.jsp").forward(req,resp);
+            req.getRequestDispatcher("/order/order_list.jsp").forward(req, resp);
+        } catch (ServletException | IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void listOrders(HttpServletRequest req, HttpServletResponse resp) {
+        req.setAttribute("orders",orderService.getAllOrders());
+        try {
+            req.getRequestDispatcher("/order/order_list.jsp").forward(req, resp);
         } catch (ServletException e) {
             throw new RuntimeException(e);
         } catch (IOException e) {
@@ -68,7 +93,7 @@ public class OrderServlet extends HttpServlet {
         Order order = orderService.getOrderById(orderID);
         req.setAttribute("order", order);
         try {
-            req.getRequestDispatcher("/order/edit_list.jsp").forward(req,resp);
+            req.getRequestDispatcher("/order/edit_list.jsp").forward(req, resp);
         } catch (ServletException e) {
             throw new RuntimeException(e);
         } catch (IOException e) {
@@ -77,8 +102,9 @@ public class OrderServlet extends HttpServlet {
     }
 
     private void showCreateForm(HttpServletRequest req, HttpServletResponse resp) {
+        req.setAttribute("orders", orderService.getAllOrders());
         try {
-            req.getRequestDispatcher("/order/create_list.jsp").forward(req,resp);
+            req.getRequestDispatcher("/order/create_list.jsp").forward(req, resp);
         } catch (ServletException e) {
             throw new RuntimeException(e);
         } catch (IOException e) {
@@ -88,6 +114,7 @@ public class OrderServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.setCharacterEncoding("UTF-8");
         String action = req.getParameter("action");
         if (action == null) {
             action = "";
@@ -109,8 +136,12 @@ public class OrderServlet extends HttpServlet {
     private void updateOrder(HttpServletRequest req, HttpServletResponse resp) {
         String orderID = req.getParameter("orderID");
         String status = req.getParameter("status");
-        Order order = new Order(orderID, status);
-        orderService.updateOrder(orderID,status);
+
+        System.out.println("OrderID: " + orderID);
+        System.out.println("Status: " + status);
+
+        boolean isUpdated = orderService.updateOrder(orderID, status);
+        System.out.println("Update Success: " + isUpdated);
         try {
             resp.sendRedirect("/order?customerId=" + req.getParameter("customerID"));
         } catch (IOException e) {
@@ -126,6 +157,7 @@ public class OrderServlet extends HttpServlet {
         String status = req.getParameter("status");
         Order order = new Order(orderID, customerID, LocalDateTime.now(), totalAmount, status);
         orderService.createOrder(order);
+
         try {
             resp.sendRedirect("/order");
         } catch (IOException e) {

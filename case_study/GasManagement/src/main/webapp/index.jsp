@@ -14,24 +14,60 @@
       font-family: 'Arial', sans-serif;
     }
 
+    /* CSS chung cho tất cả navbar */
     .navbar {
-      background-color: #ff4d4d;
+      background-color: #ff4d4d; /* Màu nền đỏ */
+      border-bottom: 2px solid #e74c3c; /* Viền dưới để nổi bật */
     }
 
     .navbar-brand {
       font-weight: bold;
       color: white;
+      font-size: 1.3rem; /* Kích thước chữ */
     }
 
     .navbar-nav .nav-link {
       color: white !important;
       font-weight: bold;
+      font-size: 1rem; /* Đồng nhất kích thước chữ */
     }
 
-    .navbar-nav .nav-link.active {
-      color: white !important;
-      font-weight: bold;
+    .navbar-nav .nav-link:hover {
+      color: #e74c3c !important; /* Hiệu ứng hover */
     }
+
+    .navbar-toggler-icon {
+      background-color: white; /* Đổi màu icon toggle */
+      border-radius: 50%; /* Icon toggle tròn */
+    }
+
+    .search-form {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+    }
+
+    .search-form input {
+      width: 200px;
+      border: 2px solid #e74c3c; /* Viền đỏ */
+      border-radius: 5px; /* Bo góc */
+      padding: 5px;
+    }
+
+    .search-form button {
+      background-color: #ff4d4d;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      padding: 5px 10px;
+      margin-left: 5px;
+    }
+
+    .search-form button:hover {
+      background-color: #e74c3c;
+      color: black;
+    }
+
 
     .carousel-control-prev-icon,
     .carousel-control-next-icon {
@@ -87,26 +123,6 @@
       text-decoration: underline;
     }
 
-    .search-form {
-      display: flex;
-      justify-content: flex-end;
-      align-items: center;
-      margin-right: 50px;
-    }
-
-    .search-form input {
-      width: 200px;
-    }
-
-    .search-form button {
-      background-color: #ff4d4d;
-      color: white;
-      border: none;
-    }
-
-    .search-form button:hover {
-      background-color: black;
-    }
     .card:hover {
       border: 2px solid red;
       box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
@@ -119,32 +135,48 @@
 
 <nav class="navbar navbar-expand-lg navbar-light">
   <div class="container-fluid">
-    <a class="navbar-brand" href="Gas.html"><i class="bx bx-home-alt-2"></i> Gas</a>
+    <a class="navbar-brand" href="index.jsp"><i class='bx bx-home-alt-2'></i> Gas</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item"><a class="nav-link active" href="/order">Gọi gas</a></li>
-        <li class="nav-item"><a class="nav-link" href="#">Sửa chữa và bảo hành</a></li>
+        <li class="nav-item"><a class="nav-link active" href="/order/order_list.jsp">Đơn hàng</a></li>
+        <li class="nav-item"><a class="nav-link" href="/order/create_list.jsp">Thêm đơn</a></li>
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Bếp & loại khác</a>
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Sản phẩm
+          </a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="Bep_gas.html">Bếp gas</a></li>
-            <li><a class="dropdown-item" href="#">Bếp điện</a></li>
+            <li><a class="dropdown-item" href="">Gas</a></li>
+            <li><a class="dropdown-item" href="#">Bếp gas</a></li>
             <li><a class="dropdown-item" href="#">Máy hút mùi</a></li>
           </ul>
         </li>
-        <li class="nav-item"><a class="nav-link disabled">Feedback</a></li>
+        <li class="nav-item"><a class="nav-link disabled"></a></li>
       </ul>
-      <form class="search-form" role="search">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-dark" type="submit">Search</button>
+      <form action="/order" method="GET" class="search-form">
+        <input
+                class="form-control me-2"
+                type="text"
+                name="orderID"
+                placeholder="Mã Đơn Hàng"
+                value="${param.orderID}">
+
+        <input
+                class="form-control me-2"
+                type="text"
+                name="customerID"
+                placeholder="Mã Khách Hàng"
+                value="${param.customerID}">
+        <input type="hidden" name="action" value="search">
+        <button class="btn btn-primary" type="submit">Tìm kiếm</button>
       </form>
+
+
     </div>
   </div>
 </nav>
-
 <h3>SẢN PHẨM GAS ĐANG BÁN CHẠY</h3>
 <div id="gasCarousel" class="carousel slide">
   <div class="carousel-inner">

@@ -103,7 +103,7 @@
             }
 
             .search-form input {
-                width: 200px;
+                width: 100px;
             }
 
             .search-form button {
@@ -120,33 +120,73 @@
 <body>
 <nav class="navbar navbar-expand-lg navbar-light">
     <div class="container-fluid">
-        <a class="navbar-brand" href="Gas.html"><i class='bx bx-home-alt-2'></i> Gas</a>
+        <a class="navbar-brand" href="index.jsp"><i class='bx bx-home-alt-2'></i> Gas</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item"><a class="nav-link active" href="Goi_Gas.html">Gọi gas</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">Sửa chữa và bảo hành</a></li>
+                <li class="nav-item"><a class="nav-link active" href="order_list.jsp">Đơn hàng</a></li>
+                <li class="nav-item"><a class="nav-link" href="create_list.jsp">Thêm đơn</a></li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Bếp & loại khác
+                        Sản phẩm
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="Bep_gas.html">Bếp gas</a></li>
-                        <li><a class="dropdown-item" href="#">Bếp điện</a></li>
+                        <li><a class="dropdown-item" href="">Gas</a></li>
+                        <li><a class="dropdown-item" href="#">Bếp gas</a></li>
                         <li><a class="dropdown-item" href="#">Máy hút mùi</a></li>
                     </ul>
                 </li>
                 <li class="nav-item"><a class="nav-link disabled">Feedback</a></li>
             </ul>
-            <form class="d-flex" role="search">
-                <input class="form-control me-2" type="search" placeholder="Tìm kiếm" aria-label="Search">
-                <button class="btn btn-outline-dark" type="submit">Tìm kiếm</button>
+            <form action="/order" method="GET" class="search-form">
+                <input
+                        class="form-control me-2"
+                        type="text"
+                        name="orderID"
+                        placeholder="Mã Đơn Hàng"
+                        value="${param.orderID}">
+
+                <input
+                        class="form-control me-2"
+                        type="text"
+                        name="customerID"
+                        placeholder="Mã Khách Hàng"
+                        value="${param.customerID}">
+                <input type="hidden" name="action" value="search">
+                <button class="btn btn-primary" type="submit">Tìm kiếm</button>
             </form>
+
+
         </div>
     </div>
 </nav>
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-3 step">
+            <img src="https://www.gas24h.com.vn/themes/gas/ecommerce/images/icon-1.png" >
+            <p><strong>Bước 1:</strong></p>
+            <p>Đặt hàng trên website</p>
+        </div>
+        <div class="col-md-3 step">
+            <img src="https://www.gas24h.com.vn/themes/gas/ecommerce/images/icon-2.png" >
+            <p><strong>Bước 2:</strong></p>
+            <p>Nhân viên liên hệ xác nhận</p>
+        </div>
+        <div class="col-md-3 step">
+            <img src="https://www.gas24h.com.vn/themes/gas/ecommerce/images/icon-3.png" >
+            <p><strong>Bước 3:</strong></p>
+            <p>Giao Gas: 15 phút<br>Sản phẩm khác: 24 giờ</p>
+        </div>
+        <div class="col-md-3 step">
+            <img src="https://www.gas24h.com.vn/themes/gas/ecommerce/images/icon-4.png" >
+            <p><strong>Bước 4:</strong></p>
+            <p>Hoàn thành đơn hàng</p>
+        </div>
+    </div>
+</div>
 
 <div class="container mt-5">
     <h2>Chỉnh sửa Đơn Hàng</h2>
@@ -162,8 +202,8 @@
         <div class="mb-3">
             <label for="status" class="form-label">Trạng Thái</label>
             <select class="form-select" id="status" name="status" required>
-                <option value="Pending" ${'Pending' == order.status ? 'selected' : ''}>Pending</option>
-                <option value="Completed" ${'Completed' == order.status ? 'selected' : ''}>Completed</option>
+                <option value="Chờ" ${'Chờ' == order.status ? 'selected' : ''}>Chờ</option>
+                <option value="Hoàn thành" ${'Hoàn thành' == order.status ? 'selected' : ''}>Hoàn thành</option>
             </select>
         </div>
 
