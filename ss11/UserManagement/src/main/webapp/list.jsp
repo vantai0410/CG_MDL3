@@ -14,7 +14,7 @@
 <body>
 <h1>User Management</h1>
 <h2>
-    <a href="/users?action=create">Add New User</a>
+    <a href="/user?action=showCreateForm">Add New User</a>
 </h2>
 </center>
 <div align="center">
@@ -34,12 +34,21 @@
                 <td><c:out value="${user.email}"/></td>
                 <td><c:out value="${user.country}"/></td>
                 <td>
-                    <a href="/users?action=edit&id=${user.id}">Edit</a>
-                    <a href="/users?action=delete&id=${user.id}">Delete</a>
+                    <a href="/user?action=showEditForm&id=${user.id}">Edit</a>
+                    <a href="/user?action=delete&id=${user.id}">Delete</a>
                 </td>
             </tr>
         </c:forEach>
     </table>
+    <form action="/user" method="get">
+        <label for="country">Search by Country:</label>
+        <input type="text" name="country" id="country">
+        <button type="submit">Search</button>
+    </form>
+
+    <form action="/user" method="get">
+        <button name="action" value="sortByName">Sort by Name</button>
+    </form>
 </div>
 </body>
 </html>
