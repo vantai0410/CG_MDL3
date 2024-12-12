@@ -91,7 +91,6 @@ public class ProductServlet extends HttpServlet {
         String color = req.getParameter("color");
         String description = req.getParameter("description");
         String categoryParam = req.getParameter("category");
-
         String errorMessage = null;
         if (name == null || name.trim().isEmpty()) {
             errorMessage = "Name is required.";
@@ -102,7 +101,6 @@ public class ProductServlet extends HttpServlet {
         } else if (color == null || color.isEmpty()) {
             errorMessage = "Color is required.";
         }
-
         if (errorMessage != null) {
             req.setAttribute("error", errorMessage);
             try {
@@ -112,15 +110,11 @@ public class ProductServlet extends HttpServlet {
             }
             return;
         }
-
         double price = Double.parseDouble(priceParam);
         int quantity = Integer.parseInt(quantityParam);
         int categoryId = Integer.parseInt(categoryParam);
-
         Product product = new Product(name, price, quantity, color, description, categoryId);
-
         productService.addProduct(product);
-
         try {
             resp.sendRedirect("/product");
         } catch (IOException e) {
