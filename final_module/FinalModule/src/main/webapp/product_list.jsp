@@ -38,7 +38,17 @@
       <td>${product.categoryName}</td>
       <td>
                   <a class="btn btn-sm btn-primary" href="edit-product?id=${product.productId}">Sửa</a>
-                  <a class="btn btn-sm btn-danger" href="/product?action=delete&id=${product.productId}">Xóa</a>
+<%--                  <a class="btn btn-sm btn-danger" href="/product?action=delete&id=${product.productId}">Xóa</a>--%>
+        <a href="#" class="btn btn-outline-danger btn-sm" onclick="document.getElementById('modal-${product.productId}').style.display='flex';">
+          <i class='bx bx-trash'></i> Xóa
+        </a>
+        <div id="modal-${product.productId}" class="confirm-modal" style="display: none;">
+          <div class="modal-content">
+            <p>Bạn có chắc chắn muốn xóa?</p>
+            <a href="/product?action=delete&id=${product.productId}" class="btn btn-danger">Xác nhận</a>
+            <button class="btn btn-secondary" onclick="document.getElementById('modal-${product.productId}').style.display='none';">Hủy</button>
+          </div>
+        </div>
       </td>
     </tr>
   </c:forEach>
