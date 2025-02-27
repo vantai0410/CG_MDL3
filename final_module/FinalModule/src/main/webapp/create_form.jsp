@@ -56,7 +56,7 @@
     }
 
     button {
-      width: calc(50% - 5px); /* Nút bấm chiếm 50% chiều rộng */
+      width: calc(50% - 5px);
       margin-right: 10px;
     }
 

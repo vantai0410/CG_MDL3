@@ -1,0 +1,32 @@
+:root {
+    --primary: #0d6efd;
+}
+
+*, *:after, *:before {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #0d6efd;
+    color: #333;
+}
+
+.carousel {
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+}
+
+.carousel-inner {
+    width: 100%;
+}
+
+.carousel-inner .carousel-item img {
+    height: 500px;
+    width: 100vw;
+    object-fit: contain;
+    object-position: center center;
+    transition: transform 0.3s ease-in-out;
+}

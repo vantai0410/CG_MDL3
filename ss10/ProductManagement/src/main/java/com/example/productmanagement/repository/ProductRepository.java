@@ -2,6 +2,7 @@ package com.example.productmanagement.repository;
 
 import com.example.productmanagement.model.Product;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -15,7 +16,6 @@ public class ProductRepository implements IProductRepository {
         products.add(new Product(2, "Sản phẩm B", 2000.0, "Mô tả sản phẩm B", "Nhà sản xuất B"));
         products.add(new Product(3, "Sản phẩm C", 3000.0, "Mô tả sản phẩm C", "Nhà sản xuất C"));
     }
-
     @Override
     public List<Product> findAll() {
         return products;

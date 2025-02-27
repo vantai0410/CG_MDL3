@@ -1,0 +1,48 @@
+plugins {
+  id 'java'
+  id 'war'
+}
+
+group 'com.example'
+version '1.0-SNAPSHOT'
+
+repositories {
+  mavenCentral()
+}
+
+ext {
+  springVersion = '5.3.29'
+  junitVersion = '5.9.2'
+}
+
+sourceCompatibility = '17'
+targetCompatibility = '17'
+
+tasks.withType(JavaCompile) {
+  options.encoding = 'UTF-8'
+}
+
+dependencies {
+  // Servlet API
+  compileOnly 'javax.servlet:javax.servlet-api:4.0.1'
+
+  // JSP API và các thư viện liên quan
+  implementation 'javax.servlet.jsp:javax.servlet.jsp-api:2.3.3'
+  implementation 'javax.servlet:jstl:1.2'
+  implementation 'org.apache.taglibs:taglibs-standard-impl:1.2.5'
+
+  // Spring Framework
+  implementation "org.springframework:spring-core:${springVersion}"
+  implementation "org.springframework:spring-context:${springVersion}"
+  implementation "org.springframework:spring-beans:${springVersion}"
+  implementation "org.springframework:spring-web:${springVersion}"
+  implementation "org.springframework:spring-webmvc:${springVersion}"
+
+  // Test
+  testImplementation "org.junit.jupiter:junit-jupiter-api:${junitVersion}"
+  testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${junitVersion}"
+}
+
+test {
+  useJUnitPlatform()
+}

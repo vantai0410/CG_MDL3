@@ -8,5 +8,9 @@
 <h1><%= "Hello World!" %></h1>
 <br/>
 <a href="/user">Danh sach user</a>
+<a href="/product">Danh sach product</a>
+<a href="/cart">Danh sach order</a>
+
+
 </body>
 </html>
